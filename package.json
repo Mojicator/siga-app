@@ -5,11 +5,13 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "build-ts": "tsc",
     "postinstall": "tsc && npm run html",
     "start": "npm run serve",
     "serve": "node dist/index.js",
     "html": "copyfiles --up 1 src/public/*.html dist",
-    "watch-node": "nodemon dist/index.js"
+    "watch-node": "nodemon dist/index.js",
+    "watch-ts": "tsc -w"
   },
   "author": "Oscar Antonio Hernández Mojica",
   "license": "ISC",
