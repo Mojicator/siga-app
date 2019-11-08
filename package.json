@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build-ts": "tsc",
-    "postinstall": "build-ts && npm run html",
+    "postinstall": "npm run build-ts && npm run html",
     "start": "npm run serve",
     "serve": "node dist/index.js",
     "html": "copyfiles --up 1 src/public/*.html dist",
