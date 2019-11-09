@@ -8,7 +8,6 @@ export const loginEmployee = (req: Request, res: Response) => {
     let body = req.body;
     Employee.findOne({ email: body.email }, (err: any, employeeDB: IEmployee) => {
         if (err) {
-            console.log("trono!");
             return res.status(500).json({
                 ok: false,
                 err
@@ -16,7 +15,6 @@ export const loginEmployee = (req: Request, res: Response) => {
         }
 
         if (!employeeDB) {
-            console.log("usuario not found");
             return res.status(400).json({
                 ok: false,
                 err: {
@@ -26,7 +24,6 @@ export const loginEmployee = (req: Request, res: Response) => {
         }
 
         if (!bcrypt.compareSync(body.password, employeeDB.password)) {
-            console.log("mala contraseña");
             return res.status(400).json({
                 ok: false,
                 err: {
@@ -39,9 +36,9 @@ export const loginEmployee = (req: Request, res: Response) => {
             employee: employeeDB
         }, process.env.SECRET as string, { expiresIn: process.env.EXP as string });
 
-        console.log("Pasa!");
         res.json({
             ok: true,
+            employee: employeeDB,
             token
         });
     });
