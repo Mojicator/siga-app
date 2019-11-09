@@ -9,6 +9,6 @@ router.get("/company/:id", CompanyController.showCompany);
 router.post("/company", [checkToken], CompanyController.addCompany);
 router.put("/company/:id", CompanyController.updateCompany);
 router.delete("/company/:id", CompanyController.deleteCompany);
-router.get("/company/:id/warehouses", CompanyController.getWarehousesByCompany);
+router.get("/company/:company_id/warehouses", CompanyController.getWarehousesByCompany);
 
 export default router;
