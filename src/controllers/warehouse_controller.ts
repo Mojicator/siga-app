@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import Warehouse from '../models/warehouse';
 import { IWarehouse } from '../models/warehouse';
+import Company from '../models/company';
 
 export const allWarehouses = (req: Request, res: Response) => {
     Warehouse.find((err: any, warehouses: IWarehouse[]) => {
@@ -37,6 +38,16 @@ export const addWarehouse = (req: Request, res: Response) => {
                 err
             });
         }
+
+        Company.findByIdAndUpdate(companyId, { $push: { warehouses: warehouse._id } },
+            (err: any, res: any) => {
+                if (err) {
+                    return res.status(400).json({
+                        ok: false,
+                        err: { message: "Error al guardar warehoses in company" }
+                    });
+                }
+            });
 
         res.json({
             ok: true,
@@ -120,21 +131,4 @@ export const deleteWarehouse = (req: Request, res: Response) => {
             warehouse
         });
     });
-}
-
-export const getWarehousesByCompany = (req: Request, res: Response) => {
-    let company_id = req.params.company_id;
-    Warehouse.find()
-        .populate("company")
-        .exec((err: any, warehouses: any) => {
-            res.json({
-                ok: true,
-                warehouses
-            });
-        })
-        .catch(err => {
-            return res.status(500).json({
-                err
-            });
-        });
 }

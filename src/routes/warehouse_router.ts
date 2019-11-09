@@ -8,6 +8,5 @@ router.get("/warehouse/:id", WarehouseController.showWarehouse);
 router.post("/warehouse/:company_id", WarehouseController.addWarehouse);
 router.put("/warehouse/:id", WarehouseController.updateWarehouse);
 router.delete("/warehouse/:id", WarehouseController.deleteWarehouse);
-router.get("/company/warehouses", WarehouseController.getWarehousesByCompany);
 
 export default router;

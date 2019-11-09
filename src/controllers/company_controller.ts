@@ -129,20 +129,3 @@ export const deleteCompany = (req: Request, res: Response) => {
         });
     });
 }
-
-export const getWarehousesByCompany = (req: Request, res: Response) => {
-    let company_id = req.params.company_id;
-    Company.findById(company_id)
-        .select("warehouses")
-        .populate("warehouse name")
-        .exec()
-        .then(doc => {
-            return res.json({
-                calis: doc
-            });
-        }).catch(err => {
-            return res.status(500).json({
-                err
-            });
-        });
-}
