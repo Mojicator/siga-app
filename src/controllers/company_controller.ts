@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import Company, { ICompany } from '../models/company';
 import { ObjectID, ObjectId } from "bson";
+import Employee from "../models/employee";
 
 export const allCompanies = (req: Request, res: Response) => {
     Company.find((err: any, companies: ICompany[]) => {
@@ -38,6 +39,15 @@ export const addCompany = (req: Request, res: Response) => {
                 err
             });
         }
+
+        Employee.findByIdAndUpdate(id, { company: company._id }, (err: any) => {
+            if (err) {
+                return res.status(400).json({
+                    ok: false,
+                    err
+                });
+            }
+        });
 
         res.json({
             ok: true,
