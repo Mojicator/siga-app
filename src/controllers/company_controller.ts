@@ -23,10 +23,12 @@ export const allCompanies = (req: Request, res: Response) => {
 
 export const addCompany = (req: Request, res: Response) => {
     let body = req.body;
+    let id = res.locals.token._id;
     let company = new Company({
         name: body.name,
         giro: body.giro,
-        key: body.key
+        key: body.key,
+        employees: [id]
     });
 
     company.save((err: any, companyDB: ICompany) => {
@@ -50,18 +52,14 @@ export const showCompany = (req: Request, res: Response) => {
         if (err) {
             return res.status(400).json({
                 ok: false,
-                err: {
-                    message: "Que paso aqui?"
-                }
+                err
             });
         }
 
         if (!company) {
             return res.status(400).json({
                 ok: false,
-                err: {
-                    message: "Si esta entrando aqui"
-                }
+                err
             });
         }
 
