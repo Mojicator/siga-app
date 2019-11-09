@@ -121,3 +121,20 @@ export const deleteWarehouse = (req: Request, res: Response) => {
         });
     });
 }
+
+export const getWarehousesByCompany = (req: Request, res: Response) => {
+    let company_id = req.params.company_id;
+    Warehouse.find()
+        .populate("company")
+        .exec((err: any, warehouses: any) => {
+            res.json({
+                ok: true,
+                warehouses
+            });
+        })
+        .catch(err => {
+            return res.status(500).json({
+                err
+            });
+        });
+}
