@@ -132,3 +132,23 @@ export const deleteWarehouse = (req: Request, res: Response) => {
         });
     });
 }
+
+export const getProductByWarehouseId = (req: Request, res: Response) => {
+    let warehouseId = req.params.warehouse_id;
+    Warehouse.findById(warehouseId).
+        select("products").
+        populate("products", "name", "quantity").
+        exec().
+        then(doc => {
+            res.json({
+                ok: true,
+                doc
+            });
+        }).
+        catch(err => {
+            return res.status(500).json({
+                ok: false,
+                err
+            });
+        });
+}
