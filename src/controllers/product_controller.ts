@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import Product from "../models/product";
 import { IProduct } from '../models/product';
+import Warehouse from '../models/warehouse';
 
 export const allProducts = (req: Request, res: Response) => {
     Product.find((err: any, products: IProduct[]) => {
@@ -38,6 +39,16 @@ export const addProduct = (req: Request, res: Response) => {
                 err
             });
         }
+
+        Warehouse.findByIdAndUpdate(warehouseId, { $push: { products: product._id } },
+            (err: any, res: any) => {
+                if (err) {
+                    return res.status(400).json({
+                        ok: false,
+                        err: { message: "Error al guardar products in warehouse" }
+                    });
+                }
+            });
 
         res.json({
             ok: true,
