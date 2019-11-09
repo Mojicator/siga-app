@@ -133,3 +133,23 @@ export const deleteProduct = (req: Request, res: Response) => {
         });
     });
 }
+
+export const getPriceHistoriesByProductId = (req: Request, res: Response) => {
+    let productId = req.params.product_id;
+    Product.findById(productId).
+        select("priceHistories").
+        populate("priceHistories", "pricePerKilo", "pricePerVol", "date").
+        exec().
+        then(doc => {
+            res.json({
+                ok: true,
+                doc
+            });
+        }).
+        catch(err => {
+            return res.status(500).json({
+                ok: false,
+                err
+            });
+        });
+}
