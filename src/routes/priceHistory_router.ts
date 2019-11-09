@@ -5,7 +5,7 @@ const router: Router = Router();
 
 router.get("/histories", PriceHistoryController.allPriceHistories);
 router.get("/history/:id", PriceHistoryController.showPriceHistory);
-router.post("/history/:id", PriceHistoryController.addNewPrice);
+router.post("/history/:product_id", PriceHistoryController.addNewPrice);
 router.put("/history/:id", PriceHistoryController.updatePriceHistory);
 router.delete("/history/:id", PriceHistoryController.deletePriceHistory);
 
